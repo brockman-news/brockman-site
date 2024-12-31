@@ -10,32 +10,39 @@
   outputs = { self, nixpkgs, theme-terminimal }: let
     supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
     forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+    pkgsForSystem = system: import nixpkgs {
+      inherit system;
+      overlays = [self.overlays.default];
+    };
   in {
-    devShells = forAllSystems (system: let pkgs = nixpkgs.legacyPackages.${system}; in {
-      default = pkgs.mkShell {
-        packages = [ pkgs.zola ];
-      };
-    });
-
-    packages = forAllSystems (system: let pkgs = nixpkgs.legacyPackages.${system}; in rec {
-      brockman-news-site = pkgs.stdenv.mkDerivation {
+    overlays.default = final: prev: {
+      brockman-site = prev.stdenv.mkDerivation {
         name = "brockman-news-site";
-        src = pkgs.symlinkJoin {
+        src = prev.symlinkJoin {
           name = "zola-source";
           paths = [
             ./.
-            (pkgs.runCommand "theme" {} ''mkdir -p $out/themes && cp -r ${theme-terminimal.outPath} $out/themes/terminimal'')
+            (prev.runCommand "theme" {} ''mkdir -p $out/themes && cp -r ${theme-terminimal.outPath} $out/themes/terminimal'')
           ];
         };
         buildPhase = ''
-          ${pkgs.zola}/bin/zola build
+          ${prev.zola}/bin/zola build
         '';
         installPhase = ''
           mkdir $out
           cp -r public/* $out/
         '';
       };
-      default = brockman-news-site;
+    };
+
+    devShells = forAllSystems (system: let pkgs = pkgsForSystem system; in {
+      default = pkgs.mkShell {
+        packages = [ pkgs.zola ];
+      };
+    });
+
+    packages = forAllSystems (system: {
+      default = (pkgsForSystem system).brockman-site;
     });
   };
 }

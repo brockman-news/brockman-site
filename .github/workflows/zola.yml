@@ -9,16 +9,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        submodules: true
     - uses: cachix/install-nix-action@v19
-      with:
-        nix_path: nixpkgs=channel:nixos-24.11-small
-    - run: nix build .?submodules=1
-    - if: success()
-      uses: crazy-max/ghaction-github-pages@v2
-      with:
-        target_branch: gh-pages
-        build_dir: public
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - run: nix flake check
