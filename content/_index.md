@@ -1,7 +1,4 @@
 +++
-title = "brockman"
+paginate_by = 2
+sort_by = "date"
 +++
-
-# brockman news
-
-*the IRC newscaster*
