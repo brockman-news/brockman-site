@@ -2,11 +2,11 @@
   "nodes": {
     "nixpkgs": {
       "locked": {
-        "lastModified": 1735264675,
-        "narHash": "sha256-MgdXpeX2GuJbtlBrH9EdsUeWl/yXEubyvxM1G+yO4Ak=",
+        "lastModified": 1737885640,
+        "narHash": "sha256-GFzPxJzTd1rPIVD4IW+GwJlyGwBDV1Tj5FLYwDQQ9sM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d49da4c08359e3c39c4e27c74ac7ac9b70085966",
+        "rev": "4e96537f163fad24ed9eb317798a79afc85b51b7",
         "type": "github"
       },
       "original": {
@@ -18,24 +18,7 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs",
-        "theme-terminimal": "theme-terminimal"
-      }
-    },
-    "theme-terminimal": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1723909769,
-        "narHash": "sha256-/9waid7Hpl7NfGXoUj4fVkM4mSJ/MJytoiIKCdxZuTI=",
-        "owner": "pawroman",
-        "repo": "zola-theme-terminimal",
-        "rev": "7f630a4e319c089f27b6704e622b38d874406381",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pawroman",
-        "repo": "zola-theme-terminimal",
-        "type": "github"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

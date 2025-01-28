@@ -3,11 +3,9 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
-    theme-terminimal.url = "github:pawroman/zola-theme-terminimal";
-    theme-terminimal.flake = false;
   };
 
-  outputs = { self, nixpkgs, theme-terminimal }: let
+  outputs = { self, nixpkgs }: let
     supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
     forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
     pkgsForSystem = system: import nixpkgs {
@@ -18,28 +16,13 @@
     overlays.default = final: prev: {
       brockman-site = prev.stdenv.mkDerivation {
         name = "brockman-news-site";
-        src = prev.symlinkJoin {
-          name = "zola-source";
-          paths = [
-            ./.
-            (prev.runCommand "theme" {} ''mkdir -p $out/themes && cp -r ${theme-terminimal.outPath} $out/themes/terminimal'')
-          ];
-        };
-        buildPhase = ''
-          ${prev.zola}/bin/zola build
-        '';
+        src = ./.;
         installPhase = ''
-          mkdir $out
-          cp -r public/* $out/
+          mkdir -p $out
+          cp -r $src/{terminal.css,index.html} $out/
         '';
       };
     };
-
-    devShells = forAllSystems (system: let pkgs = pkgsForSystem system; in {
-      default = pkgs.mkShell {
-        packages = [ pkgs.zola ];
-      };
-    });
 
     packages = forAllSystems (system: {
       default = (pkgsForSystem system).brockman-site;
