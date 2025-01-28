@@ -46,13 +46,64 @@
   <header>
     <nav>
       <a href="https://github.com/brockman-news">github</a>
-      <a href="https://webirc.brockman.news/">webirc</a>
+      <a href="https://webirc.brockman.news/" target="_blank">webirc</a>
     </nav>
     <h1 id="headline">
       brockman.news
     </h1>
   </header>
   <main>
+    <h2>Get started</h2>
+    <h3>Connect Using WebIRC</h3>
+    <p>Click <a target="_blank" href="https://webirc.brockman.news/">here</a>.</p>
+    <h3>Connect Using WeeChat</h3>
+    <p>Follow these simple steps to connect to the Brockman network using <a href="https://weechat.org"
+        target="_blank">WeeChat</a>:</p>
+    <pre>/server add brockman brockman.news/6667 -autoconnect</pre>
+    <p>
+      If you already have an account with <code>NickServ</code>, you can log in securely using SASL PLAIN. Otherwise,
+      you can skip
+      this step.
+    </p>
+    <pre>
+/set irc.server.hackint.sasl_mechanism PLAIN
+/set irc.server.hackint.sasl_username &lt;login&gt;
+/set irc.server.hackint.sasl_password &lt;password&gt;</pre>
+    <p>Finally, connect.</p>
+    <pre>/save
+      /connect brockman
+      /join #all</pre>
+    </p>
+
+    <h3>Connect Using irssi</h3>
+    <p>Follow these simple steps to connect to the Brockman network using <a href="https://irssi.org/"
+        target="_blank">irssi</a>. If you already have an account with <code>NickServ</code>, you can log in using SASL
+      PLAIN (optional):</p>
+    <pre>/network add -sasl_username &lt;login&gt; -sasl_password &lt;password&gt; -sasl_mechanism PLAIN brockman</pre>
+    <p>Then set up the connection like this:</p>
+    <pre>
+      /server add -auto -net brockman brockman.news 6667
+      /save
+    </pre>
+    <p>Finally, connect.</p>
+    <pre>
+      /connect brockman
+      /join #all
+    </pre>
+
+
+    <h2>Learn more</h2>
+    <h3>Open Source</h3>
+    <p>If you're interested, you can take a look at the software components TODO
+    <p>
+    <ul>
+      <li><a href="https://github.com/brockman-news/brockman">brockman</a> - the software that fetches feeds and sends
+        new items to IRC</li>
+      <li><a href="https://github.com/brockman-news/brockman-infrastructure">brockman-infrastructure</a> - NixOS
+        configurations for
+        hosting this site</li>
+      <li><a href="https://github.com/brockman-news/go-shortener">go-shortener</a> - a minimalistic URL shortener</li>
+    </ul>
   </main>
   <footer style="">
     Site theme by <a href="https://radoslawkoziel.pl" target="_blank">panr</a>. Source code on <a
