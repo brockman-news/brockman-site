@@ -47,63 +47,175 @@
     <nav>
       <a href="https://github.com/brockman-news">github</a>
       <a href="https://webirc.brockman.news/" target="_blank">webirc</a>
+      <a href="#connect">get started</a>
+      <a href="#how-to-use">usage</a>
     </nav>
     <h1 id="headline">
       brockman.news
     </h1>
   </header>
   <main>
-    <h2>Get started</h2>
-    <h3>Connect Using WebIRC</h3>
+    <p>
+      <strong>brockman.news</strong> is an open-source platform for delivering real-time news updates through IRC.
+      It fetches news from RSS feeds and broadcasts them to dedicated channels.
+    </p>
+    <p>
+      Whether you're a journalist, researcher,
+      or simply interested in staying informed,
+      Brockman provides an efficient and flexible way to receive and share news in a community-driven environment.
+    </p>
+    <h2 id="connect">Get started: connect</h2>
+    <p>
+    There are multiple ways to connect to the Brockman network, whether you prefer a web-based client
+    or a desktop IRC client. Below, you'll find step-by-step guides for different connection methods.
+    Choose the one that best fits your setup:
+    </p>
+
+    <ul>
+      <li><a href="#connect-webirc">WebIRC</a> – quick and easy, no setup required.</li>
+      <li><a href="#connect-weechat">WeeChat</a> – a powerful, scriptable IRC client.</li>
+      <li><a href="#connect-irssi">irssi</a> – a lightweight, terminal-based IRC client.</li>
+      <li><a href="#connect-hexchat">HexChat</a> – a beginner-friendly graphical IRC client.</li>
+    </ul>
+    <h3 id="connect-webirc">Connect Using WebIRC</h3>
     <p>Click <a target="_blank" href="https://webirc.brockman.news/">here</a>.</p>
-    <h3>Connect Using WeeChat</h3>
+    <h3 id="connect-weechat">Connect Using WeeChat</h3>
     <p>Follow these simple steps to connect to the Brockman network using <a href="https://weechat.org"
         target="_blank">WeeChat</a>:</p>
     <pre>/server add brockman brockman.news/6667 -autoconnect</pre>
     <p>
-      If you already have an account with <code>NickServ</code>, you can log in securely using SASL PLAIN. Otherwise,
+      If you already have an account with <code>NickServ</code>, you can set up secure login using SASL PLAIN. Otherwise,
       you can skip
       this step.
     </p>
-    <pre>
-/set irc.server.hackint.sasl_mechanism PLAIN
-/set irc.server.hackint.sasl_username &lt;login&gt;
-/set irc.server.hackint.sasl_password &lt;password&gt;</pre>
-    <p>Finally, connect.</p>
+    <pre>/set irc.server.brockman.sasl_mechanism PLAIN
+/set irc.server.brockman.sasl_username &lt;login&gt;
+/set irc.server.brockman.sasl_password &lt;password&gt;</pre>
+    <p>Finally, connect:</p>
     <pre>/save
-      /connect brockman
-      /join #all</pre>
+/connect brockman</pre>
     </p>
 
-    <h3>Connect Using irssi</h3>
+    <h3 id="connect-irssi">Connect Using irssi</h3>
     <p>Follow these simple steps to connect to the Brockman network using <a href="https://irssi.org/"
-        target="_blank">irssi</a>. If you already have an account with <code>NickServ</code>, you can log in using SASL
-      PLAIN (optional):</p>
+        target="_blank">irssi</a>. If you already have an account with <code>NickServ</code>, you can set up SASL
+      PLAIN login (optional):</p>
     <pre>/network add -sasl_username &lt;login&gt; -sasl_password &lt;password&gt; -sasl_mechanism PLAIN brockman</pre>
-    <p>Then set up the connection like this:</p>
-    <pre>
-      /server add -auto -net brockman brockman.news 6667
-      /save
-    </pre>
-    <p>Finally, connect.</p>
-    <pre>
-      /connect brockman
-      /join #all
-    </pre>
+    <p>Then configure the server connection like this:</p>
+    <pre>/server add -auto -net brockman brockman.news 6667
+/save</pre>
+    <p>Finally, connect:</p>
+    <pre>/connect brockman</pre>
 
+    <h3 id="connect-hexchat">Connect Using HexChat</h3>
+    <p>Work in progress.</p>
 
-    <h2>Learn more</h2>
-    <h3>Open Source</h3>
-    <p>If you're interested, you can take a look at the software components TODO
+    <h2 id="how-to-use">How to use Brockman</h2>
+
     <p>
+    If you want to see messages from all RSS feeds tracked by Brockman, join the main news channel:
+    </p>
+    <pre>/join #all</pre>
+
+    track a new rss feed by mentioning the controller bot (nick: brockman)
+    brockman: add <botname> <rss url>
+
+    <p>
+    If you're interested in updates from a particular website, you can subscribe to its bot:
+    </p>
+    <pre>/msg &lt;botname&gt; subscribe</pre>
+    <p>
+    To unsubscribe from a feed:
+    </p>
+    <pre>/msg &lt;botname&gt; unsubscribe</pre>
+
+    <p>
+    If you want to learn more about a bot (such as which RSS feeds it tracks), ask it for details:
+    </p>
+    <pre>/msg &lt;botname&gt; info</pre>
+
+    <p>
+    You can create a custom channel to curate a specific selection of RSS feeds:
+    </p>
+    <pre>/join #my-newsroom</pre>
+    <p>
+    If you're logged in via SASL, you can register your channel so that it belongs to you:
+    </p>
+    <pre>/msg ChanServ register #my-newsroom</pre>
+    <p>
+    To make your channel private (invite-only), set the following IRC mode:
+    </p>
+    <pre>/mode #my-newsroom +i</pre>
+
+    <p>
+    Once your newsroom is set up, you can invite specific RSS news bots to post updates in your channel:
+    </p>
+    <pre>/invite &lt;botname&gt; &lt;anotherbotname&gt;</pre>
+    <p>
+    If you want to get rid of a bot, kick it:
+    </p>
+    <pre>/kick &lt;botname&gt;</pre>
+
+    <h3>Tracking a New RSS Feed</h3>
+    <p>
+    If you want to track a new RSS feed and have it post in an IRC channel, you can add it using the
+    controller bot <code>brockman</code>.
+    </p>
+
+    <p>
+    <strong>Step 1: Choose a Bot Name</strong>
+    Each RSS feed is assigned to a bot that posts updates. Pick a unique name for your bot
+    (e.g., <code>westernregionalnews</code> or <code>masto_someprofile</code>).
+    </p>
+
+    <p>
+    <strong>Step 2: Add the RSS Feed</strong>
+    To add a new RSS feed, mention the <code>brockman</code> bot in an the channel <code>#all</code> in the following command:
+    </p>
+    <pre>brockman: add &lt;botname&gt; &lt;rss-url&gt;</pre>
+    <p>
+    Example:
+    </p>
+    <pre>brockman: add example_com https://example.com/rss</pre>
+    <p>
+    It will automatically join <code>#all</code> and begin reporting new feed entries there.
+    If you also want its messages posted to your personal newsroom, invite the new bot like this:
+    </p>
+    <pre>/invite example_com #my-newsroom</pre>
+
+    <h2 id="learn-more">Learn more</h2>
+    <h3>Open Source</h3>
+    <p>
+    Brockman is fully open-source, meaning anyone can inspect the code, contribute improvements, or even host
+    their own instance. Below are the key components that make up the Brockman ecosystem:
+    </p>
+
     <ul>
-      <li><a href="https://github.com/brockman-news/brockman">brockman</a> - the software that fetches feeds and sends
-        new items to IRC</li>
-      <li><a href="https://github.com/brockman-news/brockman-infrastructure">brockman-infrastructure</a> - NixOS
-        configurations for
-        hosting this site</li>
-      <li><a href="https://github.com/brockman-news/go-shortener">go-shortener</a> - a minimalistic URL shortener</li>
+      <li>
+        <strong><a href="https://github.com/brockman-news/brockman" target="_blank">brockman</a></strong> –
+        The core software responsible for fetching RSS feeds, processing news updates, and relaying
+        messages to IRC channels.
+      </li>
+      <li>
+        <strong><a href="https://github.com/brockman-news/brockman-infrastructure" target="_blank">brockman-infrastructure</a></strong> –
+        NixOS configurations for deploying and maintaining the Brockman service.
+      </li>
+      <li>
+        <strong><a href="https://github.com/brockman-news/go-shortener" target="_blank">go-shortener</a></strong> –
+        A minimalistic URL shortener used within Brockman to provide cleaner, more readable links in news updates.
+      </li>
     </ul>
+
+    <h3>Want to Contribute?</h3>
+    <p>
+    Brockman is a community-driven project, and we welcome contributions of all kinds! Whether you're a
+    developer, sysadmin, or just interested in helping expand the network, there’s a place
+    for you in the Brockman community.
+    </p>
+    <p>
+    If you’d like to get involved, check out the GitHub repositories linked above, join our IRC channels,
+    or open an issue with your ideas. Every contribution helps make Brockman better!
+    </p>
   </main>
   <footer style="">
     Site theme by <a href="https://radoslawkoziel.pl" target="_blank">panr</a>. Source code on <a
