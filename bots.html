@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>brockman.news</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./terminal.css">
+  <style>
+    #headline {
+      display: flex;
+      flex: 1;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    #headline::after {
+      content: '';
+      background: repeating-linear-gradient(90deg, var(--accent), var(--accent) 2px, transparent 0, transparent 8px);
+      display: block;
+      width: 100%;
+      margin-left: 20px;
+      right: 10px;
+    }
+
+    body {
+      padding: 20px
+    }
+
+    header,
+    main,
+    footer {
+      max-width: 45rem;
+      margin: 0 auto;
+    }
+
+    footer {
+      border-top: 2px solid var(--accent);
+      margin-top: 40px;
+      padding-top: 20px;
+    }
+
+    .bots-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="https://github.com/brockman-news">github</a>
+      <a href="https://webirc.brockman.news/" target="_blank">webirc</a>
+      <a href="/">home</a>
+      <a href="/bots.html">bots</a>
+    </nav>
+    <h1 id="headline">
+      brockman.news
+    </h1>
+  </header>
+  <main>
+    <div class="bots-container" id="bots-container">
+      <!-- Bot links will be inserted dynamically -->
+    </div>
+  </main>
+  <footer style="">
+    Site theme by <a href="https://radoslawkoziel.pl" target="_blank">panr</a>. Source code on <a
+      href="https://github.com/brockman-news/brockman-site" target="_blank">Github</a>.
+  </footer>
+
+  <script>
+    async function fetchAndDisplayBots() {
+      try {
+        const response = await fetch('https://brockman.news/brockman.json');
+        const data = await response.json();
+
+        const bots = data.bots;
+        if (bots && typeof bots === 'object') {
+          createBotLinks(bots);
+        } else {
+          document.getElementById('bots-container').innerText = 'No bot data available.';
+        }
+      } catch (error) {
+        console.error('Error fetching bot data:', error);
+        document.getElementById('bots-container').innerText = 'Failed to load bot data.';
+      }
+    }
+
+    function createBotLinks(bots) {
+      const container = document.getElementById('bots-container');
+      container.innerHTML = '';
+
+      Object.entries(bots).forEach(([nick, details]) => {
+        if (details.feed) {
+          const link = document.createElement('a');
+          link.href = details.feed;
+          link.textContent = nick;
+          container.appendChild(link);
+        }
+      });
+    }
+
+    fetchAndDisplayBots();
+  </script>
+</body>
+
+</html>
