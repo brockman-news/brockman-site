@@ -19,7 +19,7 @@
         src = ./.;
         installPhase = ''
           mkdir -p $out
-          cp -r $src/{terminal.css,index.html} $out/
+          cp -r $src/{terminal.css,index.html,bots.html} $out/
         '';
       };
     };
